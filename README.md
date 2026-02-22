@@ -303,6 +303,89 @@ This project demonstrates:
 
 Perfect for learning web development!
 
+---
+
+## 🚀 Deployment Guide
+
+### Deploy to Vercel (Recommended - Free & Easiest)
+
+**Option 1: Using Vercel CLI**
+
+1. **Install Vercel CLI:**
+```bash
+npm install -g vercel
+```
+
+2. **Login to Vercel:**
+```bash
+vercel login
+```
+
+3. **Deploy from project directory:**
+```bash
+cd Desktop\weather_app
+vercel
+```
+
+4. **Follow the prompts:**
+   - Select "Y" to deploy to Vercel
+   - Choose default settings
+   - Your app will be live in seconds!
+
+**Option 2: Using GitHub Integration (Recommended)**
+
+1. **Connect to Vercel:**
+   - Visit https://vercel.com
+   - Sign up with GitHub account
+   - Click "New Project"
+   - Select your GitHub repository `weather_app`
+
+2. **Configure:**
+   - Framework: None (Static)
+   - Root Directory: ./
+   - Click "Deploy"
+
+3. **Your app is now live!** 🎉
+
+**Option 3: Drag & Drop**
+
+1. Visit https://vercel.com/new
+2. Drag your project folder
+3. System deploys automatically
+
+### Live URL Examples
+- `https://weatherflow.vercel.app`
+- `https://weather-app-sudeeksha.vercel.app`
+
+### Environment Setup
+No environment variables needed! All APIs are free and public:
+- Open-Meteo (Free weather API)
+- Nominatim (Free reverse geocoding)
+- Leaflet.js (Open-source maps)
+
+### Vercel Configuration
+The `vercel.json` file is already configured with:
+- Static file serving
+- Cache headers (1 hour)
+- Clean URLs
+- Proper routing
+
+### Post-Deployment
+After deployment, your app:
+- ✅ Gets automatic HTTPS
+- ✅ Has global CDN for fast loading
+- ✅ Auto-deploys on GitHub push
+- ✅ Includes free SSL certificate
+- ✅ Supports custom domain
+
+### Custom Domain Setup
+1. Go to Vercel Project Settings
+2. Domains → Add domain
+3. Update DNS records as shown
+4. Done!
+
+---
+
 ## 🛠️ Customization
 
 ### Change API Key
