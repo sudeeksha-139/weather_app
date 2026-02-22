@@ -4,7 +4,6 @@
   "public": true,
   "buildCommand": "echo 'No build required'",
   "env": {},
-  "envPrefix": "VITE_",
   "framework": null,
   "functions": {},
   "routes": [
