@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeatherFlow - Premium Weather Forecast</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+</head>
+
+<body>
+    <!-- Theme Toggle & Controls -->
+    <div class="top-controls">
+        <div class="control-group">
+            <button class="control-btn" id="themeToggle" title="Toggle Dark Mode">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button class="control-btn" id="tempToggle" title="Toggle °C / °F">
+                <span class="temp-unit">°C</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="app-title">
+                    <i class="fas fa-cloud-sun"></i> WeatherFlow
+                </h1>
+                <p class="app-subtitle">Real-time Weather Forecast</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Search Section -->
+            <section class="search-section">
+                <div class="search-container">
+                    <div class="search-box">
+                        <input type="text" id="cityInput" class="search-input" placeholder="Search city..."
+                            autocomplete="off">
+                        <button class="search-btn" id="searchBtn" title="Search">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+
+                    <!-- Auto-suggestions Dropdown -->
+                    <div class="suggestions-dropdown" id="suggestionsDropdown">
+                        <div class="suggestions-list" id="suggestionsList"></div>
+                    </div>
+                </div>
+
+                <!-- Search History -->
+                <div class="history-section">
+                    <label class="history-label">
+                        <i class="fas fa-history"></i> Recent Searches
+                    </label>
+                    <div class="history-dropdown" id="historyDropdown">
+                        <div class="history-list" id="historyList"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Loading Spinner -->
+            <div class="loader" id="loader">
+                <div class="spinner"></div>
+                <p>Fetching weather data...</p>
+            </div>
+
+            <!-- Error Message -->
+            <div class="error-message" id="errorMessage">
+                <i class="fas fa-exclamation-circle"></i>
+                <span id="errorText"></span>
+            </div>
+
+            <!-- Weather Content (Hidden initially) -->
+            <div class="weather-content" id="weatherContent">
+                <!-- Date & Time Display -->
+                <div class="date-time-display">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div class="date-time" id="dateTime">
+                                <!-- Date and time will be inserted here -->
+                            </div>
+                            <div class="last-updated" id="lastUpdated"></div>
+                        </div>
+                        <button id="refreshBtn" class="refresh-btn" title="Refresh Weather Data">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Main Weather Card (Glassmorphism) -->
+                <section class="weather-card main-card">
+                    <div class="weather-header">
+                        <div class="location-info">
+                            <h2 class="city-name">
+                                <span id="cityName">--</span>
+                                <span class="country-flag" id="countryFlag">🌍</span>
+                            </h2>
+                            <p class="weather-description" id="weatherDescription">--</p>
+                        </div>
+                        <div class="weather-icon-large">
+                            <img id="weatherIconLarge" src="" alt="Weather icon">
+                        </div>
+                    </div>
+
+                    <div class="temperature-section">
+                        <div class="temperature-display">
+                            <span class="temp-value" id="tempValue">--</span>
+                            <span class="feels-like">
+                                Feels like <span id="feelsLike">--</span>°
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Weather Details Grid -->
+                    <div class="weather-details">
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <i class="fas fa-droplet"></i>
+                            </div>
+                            <div class="detail-content">
+                                <span class="detail-label">Humidity</span>
+                                <span class="detail-value" id="humidity">--%</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <i class="fas fa-wind"></i>
+                            </div>
+                            <div class="detail-content">
+                                <span class="detail-label">Wind Speed</span>
+                                <span class="detail-value" id="windSpeed">-- km/h</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <i class="fas fa-compress"></i>
+                            </div>
+                            <div class="detail-content">
+                                <span class="detail-label">Pressure</span>
+                                <span class="detail-value" id="pressure">-- mb</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="detail-content">
+                                <span class="detail-label">Visibility</span>
+                                <span class="detail-value" id="visibility">-- km</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Additional Info Cards -->
+                <div class="additional-info-section">
+                    <!-- Air Quality Card -->
+                    <section class="weather-card info-card">
+                        <div class="card-header">
+                            <i class="fas fa-wind"></i>
+                            <h3>Air Quality</h3>
+                        </div>
+                        <div class="air-quality-content">
+                            <div class="aqi-score" id="aqiScore">Good</div>
+                            <div class="aqi-description" id="aqiDescription">
+                                Air quality is suitable for outdoor activities
+                            </div>
+                            <div class="aqi-bar">
+                                <div class="aqi-bar-fill" id="aqiBarFill" style="width: 60%"></div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- UV Index Card -->
+                    <section class="weather-card info-card">
+                        <div class="card-header">
+                            <i class="fas fa-sun"></i>
+                            <h3>UV Index</h3>
+                        </div>
+                        <div class="uv-content">
+                            <div class="uv-value" id="uvIndex">5</div>
+                            <div class="uv-level" id="uvLevel">Moderate</div>
+                            <p class="uv-tip" id="uvTip">Apply sunscreen SPF 30+</p>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Weather Tips Card -->
+                <section class="weather-card weather-tips-card">
+                    <div class="card-header">
+                        <i class="fas fa-lightbulb"></i>
+                        <h3>Weather Tips</h3>
+                    </div>
+                    <div class="tips-container" id="tipsContainer">
+                        <!-- Tips will be dynamically inserted -->
+                    </div>
+                </section>
+
+                <!-- Hourly Preview Card -->
+                <section class="weather-card hourly-card">
+                    <div class="card-header">
+                        <i class="fas fa-clock"></i>
+                        <h3>Hourly Preview</h3>
+                    </div>
+                    <div class="hourly-container" id="hourlyContainer">
+                        <!-- Hourly items will be dynamically inserted -->
+                    </div>
+                </section>
+
+                <!-- Map Section -->
+                <section class="weather-card map-section">
+                    <div class="card-header">
+                        <i class="fas fa-map"></i>
+                        <h3>Location Map</h3>
+                    </div>
+                    <div id="weatherMap" class="weather-map"></div>
+                </section>
+            </div>
+
+            <!-- Initial Message (shown when no weather data) -->
+            <div class="initial-message" id="initialMessage">
+                <div class="welcome-icon">
+                    <i class="fas fa-cloud-sun"></i>
+                </div>
+                <h2>Welcome to WeatherFlow</h2>
+                <p>Search for a city or use your current location to get started</p>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>WeatherFlow © 2026 | Powered by Open-Meteo API (Free & Open Source)</p>
+        </footer>
+    </div>
+
+    <!-- Leaflet JS for Map -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <!-- Main Script -->
+    <script src="script.js"></script>
+</body>
+
+</html>
