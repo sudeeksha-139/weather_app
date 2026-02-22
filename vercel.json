@@ -2,17 +2,12 @@
   "name": "weatherflow",
   "version": 2,
   "public": true,
-  "buildCommand": "echo 'No build required'",
-  "env": {},
-  "framework": null,
-  "functions": {},
   "routes": [
     {
       "src": "/(.*)",
       "dest": "/$1"
     }
   ],
-  "regions": ["iad1"],
   "cleanUrls": true,
   "trailingSlash": false,
   "headers": [
